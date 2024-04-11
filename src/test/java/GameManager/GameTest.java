@@ -6,7 +6,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 class GameTest {
 
@@ -21,26 +23,8 @@ class GameTest {
     void register() {
         Game repo = new Game();
 
-        repo.register(player1);
-        repo.register(player2);
-        repo.register(player3);
-        repo.register(player4);
-        repo.register(player5);
-        repo.register(player6);
-
-        List<Player> expected = Arrays.asList(new Player[]{player1, player2, player3, player4, player5, player6});
-        List<Player> actual = repo.findAll();
-
-        Assertions.assertEquals(expected, actual);
-    }
-
-    @Test
-    void findAll() {
-        Game repo = new Game();
-        repo.register(player1);
-
-        List<Player> expected = Arrays.asList(new Player[]{player1});
-        List<Player> actual = repo.findAll();
+        Player expected = player1;
+        Player actual = repo.register(player1);
 
         Assertions.assertEquals(expected, actual);
     }
@@ -51,10 +35,8 @@ class GameTest {
         repo.register(player1);
         repo.register(player2);
 
-        Player expected = player1;
-        Player actual = repo.findByName("kosta");
-
-        Assertions.assertEquals(expected, actual);
+        boolean actual = repo.findByName("kosta");
+        Assertions.assertEquals(true, actual);
     }
 
     @Test
@@ -63,9 +45,8 @@ class GameTest {
         repo.register(player1);
         repo.register(player2);
 
-        Player actual = repo.findByName("kosta2");
-
-        Assertions.assertEquals(null, actual);
+        boolean actual = repo.findByName("kosta2");
+        Assertions.assertEquals(false, actual);
     }
 
     @Test

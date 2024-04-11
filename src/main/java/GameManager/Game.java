@@ -3,45 +3,37 @@ package GameManager;
 import Domain.Player;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Set;
 
 public class Game {
-    private final List<Player> names = new ArrayList<>();
+    private final HashMap<String, Player> names = new HashMap<>();
 
-    public List<Player> register(Player player) {
-        names.add(player);
-        return names;
+    public Player register(Player player) {
+        names.put(player.getName(), player);
+        return player;
     }
-
-    public List<Player> findAll() {
-        return names;
-    }
-
-    public Player findByName(String name) {
-        for (Player player : names) {
-            if (player.getName().equals(name)) {
-                return player;
-            }
-        }
-        return null;
+    public boolean findByName(String name) {
+        return names.containsKey(name);
     }
 
     public int round(String playerName1, String playerName2) {
-        if (findByName(playerName1) == null) {
+        if (findByName(playerName1) == false) {
             throw new NotRegisteredException(
                     playerName1 + " You need to register first, dear!"
             );
         }
-        if (findByName(playerName2) == null) {
+        if (findByName(playerName2) == false) {
             throw new NotRegisteredException(
                     playerName2 + " You need to register fist, dear!"
             );
         }
 
-        if (findByName(playerName1).getStrength() > findByName(playerName2).getStrength()) {
+        if (names.get(playerName1).getStrength() > names.get(playerName2).getStrength()) {
             return 1;
         }
-        if (findByName(playerName1).getStrength() < findByName(playerName2).getStrength()) {
+        if (names.get(playerName1).getStrength() < names.get(playerName2).getStrength()) {
             return 2;
         }
         return 0;
